@@ -13,9 +13,9 @@ public class Population {
 
     int populationCount;
 
-    int step = 0;
+    public int step = 0;
 
-    ArrayList<Vector> population;
+    public ArrayList<Vector> population;
 
     final CrossingFunction crossingFunction;
     final RecoveryFunction recoveryFunction;
@@ -23,7 +23,7 @@ public class Population {
     final SelectionFunction selectionFunction;
     final ReplacementFunction replacementFunction;
     final CoverCheckFunction coverCheckFunction;
-    final SetsMatrix setsMatrix;
+    public final SetsMatrix setsMatrix;
     final int populationGrowth;
 
     public Population(int populationCount, CrossingFunction crossingFunction,
@@ -50,13 +50,14 @@ public class Population {
     }
 
     public void nextStep() {
+        step++;
         ArrayList<Parents> parentsArray = selectionFunction.select(population, setsMatrix, populationGrowth);
         for (Parents parents : parentsArray) {
             Vector newUnit = crossingFunction.cross(parents, population, setsMatrix);
             if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
                 newUnit = recoveryFunction.recover(newUnit, setsMatrix);
             }
-            newUnit = mutationFunction.mutate(newUnit);
+            newUnit = mutationFunction.mutate(newUnit, setsMatrix);
             if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
                 newUnit = recoveryFunction.recover(newUnit, setsMatrix);
             }

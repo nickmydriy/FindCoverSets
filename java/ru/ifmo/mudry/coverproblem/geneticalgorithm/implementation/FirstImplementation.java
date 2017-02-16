@@ -19,15 +19,16 @@ public class FirstImplementation implements GeneticAlgorithm {
         SetsMatrix setsMatrix = new SetsMatrix(matrix, cost);
         Population population = new Population(10, new CrossingFunctionImpl(), new RecoveryFunctionImpl(),
                 new MutationFunctionImpl(), setsMatrix, new CreateUnitFunctionImpl(), new SelectionFunctionImpl(),
-                new ReplacementFunctionImpl(), new CoverCheckFunctionImpl(), 2);
+                new ReplacementFunctionImpl(), new CoverCheckFunctionImpl(), 6);
 
         int stepsWithoutProgress = 0;
 
-        int stepsWOPtoStop = 10;
+        int stepsWOPtoStop = 15;
 
         double currentProgress = population.getTheBestResult().getFitness();
 
         while (true) {
+            System.out.println(population.step + " " + currentProgress);
             population.nextStep();
             double stepProgress = population.getTheBestResult().getFitness();
             if (currentProgress == stepProgress) {
@@ -36,6 +37,7 @@ public class FirstImplementation implements GeneticAlgorithm {
                     break;
                 }
             } else {
+                currentProgress = stepProgress;
                 stepsWithoutProgress = 0;
             }
         }
@@ -55,10 +57,11 @@ public class FirstImplementation implements GeneticAlgorithm {
 
     private class MutationFunctionImpl implements MutationFunction {
         @Override
-        public Vector mutate(Vector unit) {
+        public Vector mutate(Vector unit, SetsMatrix matrix) {
             int pos = Math.abs(Randomizer.random.nextInt()) % unit.getVector().length;
-            unit.getVector()[pos] = !unit.getVector()[pos];
-            return unit;
+            boolean[] vector = unit.getVector();
+            vector[pos] = !vector[pos];
+            return new Vector(vector, FitnessFunction.calculateFitness(vector, matrix.cost));
         }
     }
 
@@ -158,8 +161,11 @@ public class FirstImplementation implements GeneticAlgorithm {
                     candidates.add(i);
                 }
             }
+            if (candidates.isEmpty()) {
+                return;
+            }
             int pos = Randomizer.random.nextInt(candidates.size());
-            population.set(pos, newUnit);
+            population.set(candidates.get(pos), newUnit);
         }
     }
 
