@@ -1,10 +1,10 @@
 package ru.ifmo.mudry.coverproblem.geneticalgorithm;
 
 
-import javafx.util.Pair;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by Nick Mudry on 16.02.2017.
@@ -22,12 +22,13 @@ public class Population {
     final MutationFunction mutationFunction;
     final SelectionFunction selectionFunction;
     final ReplacementFunction replacementFunction;
+    final CoverCheckFunction coverCheckFunction;
     final SetsMatrix setsMatrix;
 
     public Population(int populationCount, ArrayList<Vector> population, CrossingFunction crossingFunction,
                       RecoveryFunction recoveryFunction, MutationFunction mutationFunction,
                       SetsMatrix setsMatrix, CreateUnitFunction createUnitFunction, SelectionFunction selectionFunction,
-                      ReplacementFunction replacementFunction) {
+                      ReplacementFunction replacementFunction, CoverCheckFunction coverCheckFunction) {
         this.populationCount = populationCount;
         this.population = population;
         this.crossingFunction = crossingFunction;
@@ -36,10 +37,11 @@ public class Population {
         this.setsMatrix = setsMatrix;
         this.selectionFunction = selectionFunction;
         this.replacementFunction = replacementFunction;
+        this.coverCheckFunction = coverCheckFunction;
         population = new ArrayList<>(populationCount);
         for (int i = 0; i < populationCount; i++) {
             Vector newUnit = createUnitFunction.createUnit(setsMatrix);
-            if (!checkCover(newUnit)) {
+            if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
                 newUnit = recoveryFunction.recover(newUnit, setsMatrix);
             }
             population.add(newUnit);
@@ -49,17 +51,13 @@ public class Population {
     public void nextStep() {
         Parents parents = selectionFunction.select(population);
         Vector newUnit = crossingFunction.cross(parents.getFirstParent(), parents.getSecondParent());
-        if (!checkCover(newUnit)) {
+        if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
             newUnit = recoveryFunction.recover(newUnit, setsMatrix);
         }
         newUnit = mutationFunction.mutate(newUnit);
-        if (!checkCover(newUnit)) {
+        if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
             newUnit = recoveryFunction.recover(newUnit, setsMatrix);
         }
         replacementFunction.replace(population, newUnit);
-    }
-
-    private boolean checkCover(Vector vector) {
-        return true;
     }
 }
