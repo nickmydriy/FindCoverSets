@@ -1,6 +1,7 @@
 package ru.ifmo.mudry.coverproblem;
 
 import com.sun.javafx.binding.StringFormatter;
+import ru.ifmo.mudry.coverproblem.bruteforcealgorithm.BruteforceAlgorithm;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.Population;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.FirstImplementation;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.Vector;
@@ -17,7 +18,7 @@ import java.util.Arrays;
  */
 public class Main {
 
-    static int SIZE = 30;
+    static int SIZE = 10;
 
     public static void main(String[] args) throws IOException {
         DecimalFormat myFormatter = new DecimalFormat("#.##");
@@ -33,15 +34,6 @@ public class Main {
         for (int i = 0; i < SIZE; i++) {
             testCost[i] = Math.random() * 10;
         }
-
-//        BufferedReader reader = new BufferedReader(new FileReader("test.in"));
-//        for (int i = 0; i < SIZE; i++) {
-//            String[] line = reader.readLine().split(" ");
-//            for (int j = 0; j < SIZE; j++) {
-//                test[i][j] = Integer.parseInt(line[j]);
-//            }
-//            testCost[i] = Double.parseDouble(line[line.length - 1]);
-//        }
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -59,14 +51,23 @@ public class Main {
             }
         }
 
+        BruteforceAlgorithm bruteforceAlgorithm = new BruteforceAlgorithm(testBool, testCost);
+
+        Vector vec = bruteforceAlgorithm.calculate();
+
         FirstImplementation testAlgo = new FirstImplementation();
 
         Population population = testAlgo.calculate(testBool, testCost);
 
         Vector vector = population.getTheBestResult();
 
+        System.out.println("Bruteforce result: ");
+        System.out.println("Cost: " + vec.getFitness());
+        System.out.println("Vector: " + Arrays.toString(vec.getVector()));
+
+        System.out.println("Genetic result: ");
         System.out.println("Population step: " + population.step);
         System.out.println("Power: " + vector.getFitness());
-        System.out.println("Vector" + Arrays.toString(vector.getVector()));
+        System.out.println("Vector: " + Arrays.toString(vector.getVector()));
     }
 }
