@@ -1,0 +1,197 @@
+Test
+Standard Functions
+Test Accurate. Compare with Bruteforce Algorithm.
+    Size: 5, Population size: 5, Population growth: 4
+        Average percent deviation: 0.0
+        Average time: 4
+    Size: 5, Population size: 5, Population growth: 8
+        Average percent deviation: 0.5609774799816881
+        Average time: 2
+    Size: 5, Population size: 5, Population growth: 12
+        Average percent deviation: 0.0
+        Average time: 1
+    Size: 5, Population size: 10, Population growth: 4
+        Average percent deviation: 0.0
+        Average time: 0
+    Size: 5, Population size: 10, Population growth: 8
+        Average percent deviation: 0.20395003512568605
+        Average time: 1
+    Size: 5, Population size: 10, Population growth: 12
+        Average percent deviation: 0.0
+        Average time: 0
+    Size: 5, Population size: 15, Population growth: 4
+        Average percent deviation: 0.0
+        Average time: 1
+    Size: 5, Population size: 15, Population growth: 8
+        Average percent deviation: 0.0
+        Average time: 1
+    Size: 5, Population size: 15, Population growth: 12
+        Average percent deviation: 0.0
+        Average time: 2
+    Size: 10, Population size: 5, Population growth: 4
+        Average percent deviation: 5.183515384416329
+        Average time: 2
+    Size: 10, Population size: 5, Population growth: 8
+        Average percent deviation: 3.156062939164035
+        Average time: 3
+    Size: 10, Population size: 5, Population growth: 12
+        Average percent deviation: 0.7139398545657214
+        Average time: 2
+    Size: 10, Population size: 10, Population growth: 4
+        Average percent deviation: 0.0
+        Average time: 1
+    Size: 10, Population size: 10, Population growth: 8
+        Average percent deviation: 0.17539500716606654
+        Average time: 1
+    Size: 10, Population size: 10, Population growth: 12
+        Average percent deviation: 0.2832329207446303
+        Average time: 1
+    Size: 10, Population size: 15, Population growth: 4
+        Average percent deviation: 2.944165305977317
+        Average time: 1
+    Size: 10, Population size: 15, Population growth: 8
+        Average percent deviation: 0.13843578182124458
+        Average time: 1
+    Size: 10, Population size: 15, Population growth: 12
+        Average percent deviation: 0.0
+        Average time: 2
+    Size: 15, Population size: 5, Population growth: 4
+        Average percent deviation: 0.0
+        Average time: 3
+    Size: 15, Population size: 5, Population growth: 8
+        Average percent deviation: 1.5918859284499276
+        Average time: 2
+    Size: 15, Population size: 5, Population growth: 12
+        Average percent deviation: 6.15707932955392
+        Average time: 3
+    Size: 15, Population size: 10, Population growth: 4
+        Average percent deviation: 0.0
+        Average time: 3
+    Size: 15, Population size: 10, Population growth: 8
+        Average percent deviation: 0.9213412750654928
+        Average time: 2
+    Size: 15, Population size: 10, Population growth: 12
+        Average percent deviation: 0.0
+        Average time: 2
+    Size: 15, Population size: 15, Population growth: 4
+        Average percent deviation: 10.291568988872825
+        Average time: 2
+    Size: 15, Population size: 15, Population growth: 8
+        Average percent deviation: 3.5392456181622136
+        Average time: 3
+    Size: 15, Population size: 15, Population growth: 12
+        Average percent deviation: 0.0
+        Average time: 2
+    Size: 20, Population size: 5, Population growth: 4
+        Average percent deviation: 5.0527645666208825
+        Average time: 4
+    Size: 20, Population size: 5, Population growth: 8
+        Average percent deviation: 5.596803604665675
+        Average time: 4
+    Size: 20, Population size: 5, Population growth: 12
+        Average percent deviation: 2.1321451415208665
+        Average time: 5
+    Size: 20, Population size: 10, Population growth: 4
+        Average percent deviation: 3.33459959405049
+        Average time: 4
+    Size: 20, Population size: 10, Population growth: 8
+        Average percent deviation: 4.389311937222144
+        Average time: 3
+    Size: 20, Population size: 10, Population growth: 12
+        Average percent deviation: 2.0464236252147066
+        Average time: 4
+    Size: 20, Population size: 15, Population growth: 4
+        Average percent deviation: 0.0
+        Average time: 4
+    Size: 20, Population size: 15, Population growth: 8
+        Average percent deviation: 0.0
+        Average time: 4
+    Size: 20, Population size: 15, Population growth: 12
+        Average percent deviation: 0.0
+        Average time: 4
+Average deviation for this block: 1.6225790088433851
+
+Test on big Data. Deviation between max and min value.
+    Size: 100, Population size: 30, Population growth: 20
+        Average percent deviation: 1.6991045154385251
+        Average time: 142
+    Size: 100, Population size: 30, Population growth: 40
+        Average percent deviation: 0.0
+        Average time: 116
+    Size: 100, Population size: 30, Population growth: 80
+        Average percent deviation: 0.7417928663661671
+        Average time: 129
+    Size: 100, Population size: 60, Population growth: 20
+        Average percent deviation: 0.16681852283419918
+        Average time: 124
+    Size: 100, Population size: 60, Population growth: 40
+        Average percent deviation: 1.6860633549948587
+        Average time: 132
+    Size: 100, Population size: 60, Population growth: 80
+        Average percent deviation: 2.868304951494278
+        Average time: 137
+    Size: 100, Population size: 100, Population growth: 20
+        Average percent deviation: 0.5079326126739291
+        Average time: 127
+    Size: 100, Population size: 100, Population growth: 40
+        Average percent deviation: 0.8144858642424827
+        Average time: 121
+    Size: 100, Population size: 100, Population growth: 80
+        Average percent deviation: 1.8913557751127148
+        Average time: 138
+    Size: 150, Population size: 30, Population growth: 20
+        Average percent deviation: 0.7118340364787767
+        Average time: 286
+    Size: 150, Population size: 30, Population growth: 40
+        Average percent deviation: 0.2296222784928887
+        Average time: 274
+    Size: 150, Population size: 30, Population growth: 80
+        Average percent deviation: 1.339856109755925
+        Average time: 317
+    Size: 150, Population size: 60, Population growth: 20
+        Average percent deviation: 10.779469107344056
+        Average time: 323
+    Size: 150, Population size: 60, Population growth: 40
+        Average percent deviation: 2.5711641171415462
+        Average time: 303
+    Size: 150, Population size: 60, Population growth: 80
+        Average percent deviation: 2.047535781662488
+        Average time: 309
+    Size: 150, Population size: 100, Population growth: 20
+        Average percent deviation: 4.348460028866766
+        Average time: 305
+    Size: 150, Population size: 100, Population growth: 40
+        Average percent deviation: 3.125426510936032
+        Average time: 330
+    Size: 150, Population size: 100, Population growth: 80
+        Average percent deviation: 7.155069973134781
+        Average time: 314
+    Size: 200, Population size: 30, Population growth: 20
+        Average percent deviation: 3.8477266609353564
+        Average time: 514
+    Size: 200, Population size: 30, Population growth: 40
+        Average percent deviation: 4.3989131950201354
+        Average time: 557
+    Size: 200, Population size: 30, Population growth: 80
+        Average percent deviation: 4.4042328201275325
+        Average time: 524
+    Size: 200, Population size: 60, Population growth: 20
+        Average percent deviation: 4.873980976382159
+        Average time: 482
+    Size: 200, Population size: 60, Population growth: 40
+        Average percent deviation: 2.511452790356655
+        Average time: 500
+    Size: 200, Population size: 60, Population growth: 80
+        Average percent deviation: 8.563739051691062
+        Average time: 546
+    Size: 200, Population size: 100, Population growth: 20
+        Average percent deviation: 1.950364211388964
+        Average time: 524
+    Size: 200, Population size: 100, Population growth: 40
+        Average percent deviation: 4.196048673467531
+        Average time: 527
+    Size: 200, Population size: 100, Population growth: 80
+        Average percent deviation: 2.811056567851272
+        Average time: 515
+Average deviation for this block: 2.9719189390441136
+

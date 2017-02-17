@@ -4,7 +4,6 @@ package ru.ifmo.mudry.coverproblem.geneticalgorithm;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.*;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Created by Nick Mudry on 16.02.2017.
@@ -26,10 +25,10 @@ public class Population {
     public final SetsMatrix setsMatrix;
     final int populationGrowth;
 
-    public Population(int populationCount, CrossingFunction crossingFunction,
+    public Population(SetsMatrix setsMatrix, int populationCount, int populationGrowth, CrossingFunction crossingFunction,
                       RecoveryFunction recoveryFunction, MutationFunction mutationFunction,
-                      SetsMatrix setsMatrix, CreateUnitFunction createUnitFunction, SelectionFunction selectionFunction,
-                      ReplacementFunction replacementFunction, CoverCheckFunction coverCheckFunction, int populationGrowth) {
+                      CreateUnitFunction createUnitFunction, SelectionFunction selectionFunction,
+                      ReplacementFunction replacementFunction, CoverCheckFunction coverCheckFunction) {
         this.populationCount = populationCount;
         this.crossingFunction = crossingFunction;
         this.recoveryFunction = recoveryFunction;
@@ -49,19 +48,42 @@ public class Population {
         }
     }
 
+    public Population(SetsMatrix setsMatrix, int populationCount, int populationGrowth, GeneticFunctions functions,
+                      CoverCheckFunction coverCheckFunction) {
+        this.populationCount = populationCount;
+        this.crossingFunction = functions.crossingFunction;
+        this.recoveryFunction = functions.recoveryFunction;
+        this.mutationFunction = functions.mutationFunction;
+        this.setsMatrix = setsMatrix;
+        this.selectionFunction = functions.selectionFunction;
+        this.replacementFunction = functions.replacementFunction;
+        this.coverCheckFunction = coverCheckFunction;
+        this.populationGrowth = populationGrowth;
+        population = new ArrayList<>(populationCount);
+        for (int i = 0; i < populationCount; i++) {
+            Vector newUnit = functions.createUnitFunction.createUnit(setsMatrix);
+            if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
+                newUnit = recoveryFunction.recover(newUnit, setsMatrix);
+            }
+            population.add(newUnit);
+        }
+    }
+
     public void nextStep() {
         step++;
         ArrayList<Parents> parentsArray = selectionFunction.select(population, setsMatrix, populationGrowth);
         for (Parents parents : parentsArray) {
-            Vector newUnit = crossingFunction.cross(parents, population, setsMatrix);
-            if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
-                newUnit = recoveryFunction.recover(newUnit, setsMatrix);
+            ArrayList<Vector> children = crossingFunction.cross(parents, population, setsMatrix);
+            for (Vector newUnit : children) {
+                if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
+                    newUnit = recoveryFunction.recover(newUnit, setsMatrix);
+                }
+                newUnit = mutationFunction.mutate(newUnit, setsMatrix);
+                if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
+                    newUnit = recoveryFunction.recover(newUnit, setsMatrix);
+                }
+                replacementFunction.replace(population, newUnit);
             }
-            newUnit = mutationFunction.mutate(newUnit, setsMatrix);
-            if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
-                newUnit = recoveryFunction.recover(newUnit, setsMatrix);
-            }
-            replacementFunction.replace(population, newUnit);
         }
     }
 
