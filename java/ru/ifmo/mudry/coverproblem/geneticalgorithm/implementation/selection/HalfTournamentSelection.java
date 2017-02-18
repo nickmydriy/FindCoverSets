@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Простая Функция селекции.
+ * Принцип: выбираем двух случайных особей из популяции, выбираем лучшую из них.
+ * Выбираем для этой особи случайную пару из популяции.
  */
 public class HalfTournamentSelection implements SelectionFunction {
-
     @Override
     public ArrayList<Parents> select(List<Vector> population, SetsMatrix matrix, int count) {
         ArrayList<Parents> result = new ArrayList<>(count);

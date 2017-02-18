@@ -1,7 +1,7 @@
 package ru.ifmo.mudry.coverproblem.geneticalgorithm.util;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Пара состоящая из двух {@link Vector}. Не более.
  */
 public class Parents {
     final Vector firstParent, secondParent;

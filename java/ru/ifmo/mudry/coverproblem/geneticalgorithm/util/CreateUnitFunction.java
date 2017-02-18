@@ -1,8 +1,12 @@
 package ru.ifmo.mudry.coverproblem.geneticalgorithm.util;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Функция для создания индивида по матрице множеств.
  */
 public interface CreateUnitFunction {
+    /**
+     * @param setsMatrix матрица множеств.
+     * @return полученный каким-то образом индивид.
+     */
     Vector createUnit(SetsMatrix setsMatrix);
 }

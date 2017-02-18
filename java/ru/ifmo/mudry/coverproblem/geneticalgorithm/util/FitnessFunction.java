@@ -1,9 +1,14 @@
 package ru.ifmo.mudry.coverproblem.geneticalgorithm.util;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Функция приспособленности.
  */
 public class FitnessFunction {
+    /**
+     * @param vector генотип особи. (Каждый бит говорит о вхождении конкретного множства).
+     * @param cost массив описывающий цену множеств. (Элемент с индексом i содержит цену i-го множества).
+     * @return сумма всех описанных в vector множеств.
+     */
     public static double calculateFitness(boolean[] vector, double[] cost) {
         double result = 0;
         for (int i = 0; i < vector.length; i++) {

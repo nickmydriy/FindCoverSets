@@ -1,7 +1,7 @@
 package ru.ifmo.mudry.coverproblem.geneticalgorithm.util;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Класс обьединяющий функции необходимы {@link ru.ifmo.mudry.coverproblem.geneticalgorithm.GeneticAlgorithm}
  */
 public class GeneticFunctions {
     public final CreateUnitFunction createUnitFunction;

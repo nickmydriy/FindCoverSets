@@ -6,7 +6,7 @@ import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.SetsMatrix;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.Vector;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Функция для создания индивида путем случайного выбора генов.
  */
 public class RandomCreateUnitsFunction implements CreateUnitFunction {
     @Override

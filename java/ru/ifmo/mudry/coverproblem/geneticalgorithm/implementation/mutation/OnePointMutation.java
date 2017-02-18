@@ -7,7 +7,8 @@ import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.SetsMatrix;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.Vector;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Одноточечная мутация.
+ * Принцип: выбираем случайый ген, и инвертируем его значение.
  */
 public class OnePointMutation implements MutationFunction {
     @Override

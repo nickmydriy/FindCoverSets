@@ -3,8 +3,14 @@ package ru.ifmo.mudry.coverproblem.geneticalgorithm.util;
 import java.util.ArrayList;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Функция скрещивания.
  */
 public interface CrossingFunction {
+    /**
+     * @param parents родители.
+     * @param population популяция.
+     * @param matrix матрица множеств.
+     * @return возвращает список состоящих из детей заданных в parent индивидов.
+     */
     ArrayList<Vector> cross(Parents parents, ArrayList<Vector> population, SetsMatrix matrix);
 }

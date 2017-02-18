@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Простая реализация проверки является ли множество покрытием.
  */
 public class StandardCoverCheck implements CoverCheckFunction {
     @Override

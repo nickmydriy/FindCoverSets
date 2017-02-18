@@ -6,30 +6,43 @@ import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.*;
 import java.util.ArrayList;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Класс описывает текущую популяцию.
+ * Осуществляет взаимодействие популяции. Проводит селекцию, скрещивание и мутации.
+ *
+ * Использует {@link FitnessFunction} для рассчета приспособленности.
  */
 public class Population {
 
-    int populationCount;
+    private int step = 0;
 
-    public int step = 0;
+    private ArrayList<Vector> population;
 
-    public ArrayList<Vector> population;
+    private final CrossingFunction crossingFunction;
+    private final RecoveryFunction recoveryFunction;
+    private final MutationFunction mutationFunction;
+    private final SelectionFunction selectionFunction;
+    private final ReplacementFunction replacementFunction;
+    private final CoverCheckFunction coverCheckFunction;
+    private final SetsMatrix setsMatrix;
+    private final int populationGrowth;
 
-    final CrossingFunction crossingFunction;
-    final RecoveryFunction recoveryFunction;
-    final MutationFunction mutationFunction;
-    final SelectionFunction selectionFunction;
-    final ReplacementFunction replacementFunction;
-    final CoverCheckFunction coverCheckFunction;
-    public final SetsMatrix setsMatrix;
-    final int populationGrowth;
-
+    /**
+     * Стандартный конструктор
+     * @param setsMatrix матрица описывающая множества и их веса.
+     * @param populationCount размер популяции.
+     * @param populationGrowth определяет количество проводимых скрещиваний для каждого шага.
+     * @param crossingFunction функция скрещивания.
+     * @param recoveryFunction функция восстановления ответа, в случае, если получившийся индивид не является покрытием.
+     * @param mutationFunction функция мутации.
+     * @param createUnitFunction функция для создания начальной популяции.
+     * @param selectionFunction функция для отбора пар для скрещивания.
+     * @param replacementFunction функция смены популяции.
+     * @param coverCheckFunction функция для проверки является ли инвидив покрытием.
+     */
     public Population(SetsMatrix setsMatrix, int populationCount, int populationGrowth, CrossingFunction crossingFunction,
                       RecoveryFunction recoveryFunction, MutationFunction mutationFunction,
                       CreateUnitFunction createUnitFunction, SelectionFunction selectionFunction,
                       ReplacementFunction replacementFunction, CoverCheckFunction coverCheckFunction) {
-        this.populationCount = populationCount;
         this.crossingFunction = crossingFunction;
         this.recoveryFunction = recoveryFunction;
         this.mutationFunction = mutationFunction;
@@ -48,9 +61,21 @@ public class Population {
         }
     }
 
+    /**
+     * Делает тоже самое что и {@link Population#Population(SetsMatrix, int, int, CrossingFunction,
+     *              RecoveryFunction, MutationFunction, CreateUnitFunction, SelectionFunction,
+     *              ReplacementFunction, CoverCheckFunction)}
+     *
+     * @param setsMatrix матрица описывающая множества и их веса.
+     * @param populationCount размер популяции.
+     * @param populationGrowth определяет количество проводимых скрещиваний для каждого шага.
+     * @param functions набор необходимых в {@link Population#Population(SetsMatrix, int, int, CrossingFunction,
+     *              RecoveryFunction, MutationFunction, CreateUnitFunction, SelectionFunction,
+     *              ReplacementFunction, CoverCheckFunction)} функций.
+     * @param coverCheckFunction функция для проверки является ли инвидив покрытием.
+     */
     public Population(SetsMatrix setsMatrix, int populationCount, int populationGrowth, GeneticFunctions functions,
                       CoverCheckFunction coverCheckFunction) {
-        this.populationCount = populationCount;
         this.crossingFunction = functions.crossingFunction;
         this.recoveryFunction = functions.recoveryFunction;
         this.mutationFunction = functions.mutationFunction;
@@ -69,6 +94,11 @@ public class Population {
         }
     }
 
+    /**
+     * Проводит следующий шаг.
+     * Применяет операцию селекции. На выбранных потомках используется функция скрещивания. Проводятся мутации и
+     * смена популяции.
+     */
     public void nextStep() {
         step++;
         ArrayList<Parents> parentsArray = selectionFunction.select(population, setsMatrix, populationGrowth);
@@ -87,6 +117,9 @@ public class Population {
         }
     }
 
+    /**
+     * @return возвращает наилучшего индивида в популяции по параметру приспособлености.
+     */
     public Vector getTheBestResult() {
         return population.stream().min((o1, o2) -> o1.getFitness() == o2.getFitness() ? 0 :
                 o1.getFitness() > o2.getFitness() ? 1 : -1).get();

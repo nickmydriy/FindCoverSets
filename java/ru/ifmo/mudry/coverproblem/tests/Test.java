@@ -7,7 +7,7 @@ import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.createunit.Ran
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.crossing.StandardOnePointCrossOver;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.mutation.OnePointMutation;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.recovery.SimpleGreedyRecover;
-import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.replacement.ReplaceOnesWhosWorse;
+import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.replacement.ReplaceOnesWhoIsWorse;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.selection.HalfTournamentSelection;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.*;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.Vector;
@@ -18,19 +18,19 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Тесты для задачи
  */
 public class Test {
-    static final int uniqueTestCount = 10;
-    static final int testPerUnique = 10;
+    static final int uniqueTestCount = 10; //количество генерируемых тестов
+    static final int testPerUnique = 10; //количество проходов каждого теста
 
     static final int[] smallTestSize = {5, 10, 15, 20};
     static final int[] smallTestPopulationSize = {5, 10, 15};
     static final int[] smallTestPopulationGrowth = {4, 8, 12};
 
-    static final int[] bigTestSize = {100, 150, 200};
-    static final int[] bigTestPopulationSize = {30, 60, 100};
-    static final int[] bigTestPopulationGrowth = {20, 40, 80};
+    static final int[] bigTestSize = {100, 150};
+    static final int[] bigTestPopulationSize = {30, 60};
+    static final int[] bigTestPopulationGrowth = {20, 40};
 
     static String[] margin = {"", "    ", "        ", "            ", "                ", "                    ",
             "                        "};
@@ -46,7 +46,7 @@ public class Test {
                     new StandardOnePointCrossOver(),
                     new OnePointMutation(),
                     new SimpleGreedyRecover(),
-                    new ReplaceOnesWhosWorse(),
+                    new ReplaceOnesWhoIsWorse(),
                     new HalfTournamentSelection());
             test("Test", "Standard Functions", functions);
         }

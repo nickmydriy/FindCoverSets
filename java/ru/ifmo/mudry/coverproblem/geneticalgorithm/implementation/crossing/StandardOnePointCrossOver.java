@@ -6,7 +6,10 @@ import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.*;
 import java.util.ArrayList;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Одноточечный кроссовер.
+ * Принцип: 1. случайным образом выбирается точка x.
+ *          2. генеририруются 2 индивида, один из которых унаследовал гены 1 родителя с 0 по x и гены 2 родителя с x по
+ *          размера генотипа. Второй унаследовал гены 2 родителя с 0 по x и гены 1 родителя с x по размера генотипа. *
  */
 public class StandardOnePointCrossOver implements CrossingFunction {
 

@@ -6,8 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nick Mudry on 16.02.2017.
+ * Функция селекции.
  */
 public interface SelectionFunction {
+    /**
+     * @param population популяция.
+     * @param matrix матрица множеств.
+     * @param count количество необходимых родительских пар.
+     * @return список {@link Parents} родительских пар.
+     */
     ArrayList<Parents> select(List<Vector> population, SetsMatrix matrix, int count);
 }
