@@ -19,7 +19,7 @@ public class StandardImplementation implements GeneticAlgorithm {
                                 RecoveryFunction recoveryFunction, ReplacementFunction replacementFunction,
                                 SelectionFunction selectionFunction) {
         SetsMatrix setsMatrix = new SetsMatrix(matrix, cost);
-        Population population = new Population(setsMatrix, populationSize, 30, crossingFunction, recoveryFunction,
+        Population population = new Population(setsMatrix, populationSize, populationGrowth, crossingFunction, recoveryFunction,
                 mutationFunction, createUnitFunction, selectionFunction, replacementFunction, new StandardCoverCheck());
 
         int stepsWithoutProgress = 0;
@@ -27,16 +27,16 @@ public class StandardImplementation implements GeneticAlgorithm {
         double currentProgress = population.getTheBestResult().getFitness();
 
         while (true) {
-            //System.out.println(population.step + " " + currentProgress);
+        //    System.out.println(population.step + " " + currentProgress);
             population.nextStep();
             double stepProgress = population.getTheBestResult().getFitness();
-            if (currentProgress == stepProgress) {
+            if (currentProgress <= stepProgress) {
                 stepsWithoutProgress++;
-                if (stepsWithoutProgress >= stepsToStop) {
+                if (stepsWithoutProgress == stepsToStop) {
                     break;
                 }
             } else {
-                currentProgress = stepProgress;
+                currentProgress = Math.min(stepProgress, currentProgress);
                 stepsWithoutProgress = 0;
             }
         }

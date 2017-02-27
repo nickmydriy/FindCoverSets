@@ -5,10 +5,7 @@ import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.RecoveryFunction;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.SetsMatrix;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Простой жадный алгоритм восстановления покрытия.
@@ -17,26 +14,29 @@ import java.util.HashMap;
  *          стоимость множества T разделенная на мощьность обьединения множеств T и М минимальна.
  *          3. Процесс заканивается, когда все элементы М покрыты.
  */
-public class SimpleGreedyRecover implements RecoveryFunction {
+public class SimpleGreedyRecovery implements RecoveryFunction {
 
     @Override
     public Vector recover(Vector unit, SetsMatrix matrix) {
-        boolean[] answer = unit.getVector();
+        boolean[] vector = getRecovered(unit.getVector(), matrix);
+        return new Vector(vector, FitnessFunction.calculateFitness(vector, matrix.cost));
+    }
+
+    protected boolean[] getRecovered(boolean[] vector, SetsMatrix matrix) {
         while (true) {
-            boolean[] nonCovered = getNonCoveredVertices(answer, matrix);
-            ArrayList<Integer> nonUsedSets = getNonUsedSets(answer);
-            sortNonUsedSets(nonUsedSets, nonCovered, matrix);
-            answer[nonUsedSets.get(0)] = true;
-            if (check(answer, matrix)) {
+            boolean[] nonCovered = getNonCoveredVertices(vector, matrix);
+            ArrayList<Integer> nonUsedSets = getNonUsedSets(vector);
+            vector[getMin(nonUsedSets, nonCovered, matrix)] = true;
+            if (check(vector, matrix)) {
                 break;
             }
         }
-        return new Vector(answer, FitnessFunction.calculateFitness(answer, matrix.cost));
+        return vector;
     }
 
-    private boolean check(boolean[] unit, SetsMatrix matrix) {
+    protected boolean check(boolean[] unit, SetsMatrix matrix) {
         boolean[] nonCovered = getNonCoveredVertices(unit, matrix);
-        for (int i = 0; i < unit.length; i++) {
+        for (int i = 0; i < matrix.elementsCount; i++) {
             if (nonCovered[i]) {
                 return false;
             }
@@ -44,9 +44,9 @@ public class SimpleGreedyRecover implements RecoveryFunction {
         return true;
     }
 
-    private boolean[] getNonCoveredVertices(boolean[] unit, SetsMatrix matrix) {
-        boolean[] nonCovered = new boolean[unit.length];
-        boolean[] covered = new boolean[unit.length];
+    protected boolean[] getNonCoveredVertices(boolean[] unit, SetsMatrix matrix) {
+        boolean[] nonCovered = new boolean[matrix.elementsCount];
+        boolean[] covered = new boolean[matrix.elementsCount];
         Arrays.fill(covered, false);
         for (int i = 0; i < unit.length; i++) {
             if (unit[i]) {
@@ -57,13 +57,13 @@ public class SimpleGreedyRecover implements RecoveryFunction {
                 }
             }
         }
-        for (int i = 0; i < unit.length; i++) {
+        for (int i = 0; i < matrix.elementsCount; i++) {
             nonCovered[i] = !covered[i];
         }
         return nonCovered;
     }
 
-    private ArrayList<Integer> getNonUsedSets(boolean[] unit) {
+    protected ArrayList<Integer> getNonUsedSets(boolean[] unit) {
         ArrayList<Integer> array = new ArrayList<>();
         for (int i = 0; i < unit.length; i++) {
             if (!unit[i]) {
@@ -73,14 +73,14 @@ public class SimpleGreedyRecover implements RecoveryFunction {
         return array;
     }
 
-    private void sortNonUsedSets(ArrayList<Integer> array, boolean[] nonCovered, SetsMatrix matrix) {
+    protected int getMin(ArrayList<Integer> array, boolean[] nonCovered, SetsMatrix matrix) {
         HashMap<Integer, Double> param = new HashMap<>();
         for (Integer cur : array) {
             int power = setsIntersectionPower(nonCovered, matrix.matrix[cur]);
             double p = matrix.cost[cur] / power;
             param.put(cur, p);
         }
-        Collections.sort(array, (first, second) -> {
+        Comparator<Integer> comparator = (first, second) -> {
             double f = param.get(first), s = param.get(second);
             if (f > s) {
                 return 1;
@@ -89,10 +89,11 @@ public class SimpleGreedyRecover implements RecoveryFunction {
                 return -1;
             }
             return 0;
-        });
+        };
+        return array.stream().min(comparator).get();
     }
 
-    private int setsIntersectionPower(boolean[] a, boolean[] b) {
+    protected int setsIntersectionPower(boolean[] a, boolean[] b) {
         int power = 0;
         for (int i = 0; i < a.length; i++) {
             if (a[i] && a[i] == b[i]) {

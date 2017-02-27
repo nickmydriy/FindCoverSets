@@ -11,10 +11,10 @@ import java.util.ArrayList;
  *          2. генеририруются 2 индивида, один из которых унаследовал гены 1 родителя с 0 по x и гены 2 родителя с x по
  *          размера генотипа. Второй унаследовал гены 2 родителя с 0 по x и гены 1 родителя с x по размера генотипа. *
  */
-public class StandardOnePointCrossOver implements CrossingFunction {
+public class OnePointCrossOver implements CrossingFunction {
 
     @Override
-    public ArrayList<Vector> cross(Parents parents, ArrayList<Vector> population, SetsMatrix matrix) {
+    public ArrayList<Vector> cross(Parents parents, ArrayList<Vector> population, SetsMatrix matrix, PopulationPattern populationPattern) {
         Vector first = parents.getFirstParent();
         Vector second = parents.getSecondParent();
         int pos = Math.abs(Randomizer.random.nextInt()) % first.getVector().length;
@@ -28,5 +28,10 @@ public class StandardOnePointCrossOver implements CrossingFunction {
         arr.add(new Vector(vector1, FitnessFunction.calculateFitness(vector1, matrix.cost)));
         arr.add(new Vector(vector2, FitnessFunction.calculateFitness(vector2, matrix.cost)));
         return arr;
+    }
+
+    @Override
+    public int getChildrenCount() {
+        return 2;
     }
 }

@@ -1,6 +1,7 @@
 package ru.ifmo.mudry.coverproblem.geneticalgorithm;
 
 
+import ru.ifmo.mudry.coverproblem.geneticalgorithm.implementation.util.PopulationPatternCalculator;
 import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.*;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Population {
 
-    private int step = 0;
+    public int step = 0;
 
     private ArrayList<Vector> population;
 
@@ -54,45 +55,23 @@ public class Population {
         population = new ArrayList<>(populationCount);
         for (int i = 0; i < populationCount; i++) {
             Vector newUnit = createUnitFunction.createUnit(setsMatrix);
-            if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
-                newUnit = recoveryFunction.recover(newUnit, setsMatrix);
+            newUnit = recoveryFunction.recover(newUnit, setsMatrix);
+            int distance = newUnit.getVector().length;
+            for (Vector unit : population) {
+                for (int j = 0; j < newUnit.getVector().length; j++) {
+                    if (unit.getVector()[j] == newUnit.getVector()[j]) {
+                        distance--;
+                    }
+                }
+            }
+            if (distance == 0) {
+                i--;
             }
             population.add(newUnit);
         }
     }
 
-    /**
-     * Делает тоже самое что и {@link Population#Population(SetsMatrix, int, int, CrossingFunction,
-     *              RecoveryFunction, MutationFunction, CreateUnitFunction, SelectionFunction,
-     *              ReplacementFunction, CoverCheckFunction)}
-     *
-     * @param setsMatrix матрица описывающая множества и их веса.
-     * @param populationCount размер популяции.
-     * @param populationGrowth определяет количество проводимых скрещиваний для каждого шага.
-     * @param functions набор необходимых в {@link Population#Population(SetsMatrix, int, int, CrossingFunction,
-     *              RecoveryFunction, MutationFunction, CreateUnitFunction, SelectionFunction,
-     *              ReplacementFunction, CoverCheckFunction)} функций.
-     * @param coverCheckFunction функция для проверки является ли инвидив покрытием.
-     */
-    public Population(SetsMatrix setsMatrix, int populationCount, int populationGrowth, GeneticFunctions functions,
-                      CoverCheckFunction coverCheckFunction) {
-        this.crossingFunction = functions.crossingFunction;
-        this.recoveryFunction = functions.recoveryFunction;
-        this.mutationFunction = functions.mutationFunction;
-        this.setsMatrix = setsMatrix;
-        this.selectionFunction = functions.selectionFunction;
-        this.replacementFunction = functions.replacementFunction;
-        this.coverCheckFunction = coverCheckFunction;
-        this.populationGrowth = populationGrowth;
-        population = new ArrayList<>(populationCount);
-        for (int i = 0; i < populationCount; i++) {
-            Vector newUnit = functions.createUnitFunction.createUnit(setsMatrix);
-            if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
-                newUnit = recoveryFunction.recover(newUnit, setsMatrix);
-            }
-            population.add(newUnit);
-        }
-    }
+
 
     /**
      * Проводит следующий шаг.
@@ -101,19 +80,23 @@ public class Population {
      */
     public void nextStep() {
         step++;
-        ArrayList<Parents> parentsArray = selectionFunction.select(population, setsMatrix, populationGrowth);
+        ArrayList<Parents> parentsArray = selectionFunction.select(population, setsMatrix,
+                populationGrowth / crossingFunction.getChildrenCount());
+        PopulationPattern populationPattern = PopulationPatternCalculator.calculate(population);
+        ArrayList<Vector> newPop = new ArrayList<>();
         for (Parents parents : parentsArray) {
-            ArrayList<Vector> children = crossingFunction.cross(parents, population, setsMatrix);
+            ArrayList<Vector> children = crossingFunction.cross(parents, population, setsMatrix, populationPattern);
             for (Vector newUnit : children) {
-                if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
+                if (coverCheckFunction.checkCover(newUnit, setsMatrix)) {
                     newUnit = recoveryFunction.recover(newUnit, setsMatrix);
                 }
-                newUnit = mutationFunction.mutate(newUnit, setsMatrix);
-                if (!coverCheckFunction.checkCover(newUnit, setsMatrix)) {
-                    newUnit = recoveryFunction.recover(newUnit, setsMatrix);
-                }
-                replacementFunction.replace(population, newUnit);
+                newUnit = mutationFunction.mutate(newUnit, setsMatrix, populationPattern);
+                newUnit = recoveryFunction.recover(newUnit, setsMatrix);
+                newPop.add(newUnit);
             }
+        }
+        for (Vector unit : newPop) {
+            replacementFunction.replace(population, unit);
         }
     }
 

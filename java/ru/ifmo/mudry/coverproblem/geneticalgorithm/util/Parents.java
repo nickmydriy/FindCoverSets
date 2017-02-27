@@ -5,7 +5,6 @@ package ru.ifmo.mudry.coverproblem.geneticalgorithm.util;
  */
 public class Parents {
     final Vector firstParent, secondParent;
-
     public Parents(Vector firstParent, Vector secondParent) {
         this.firstParent = firstParent;
         this.secondParent = secondParent;

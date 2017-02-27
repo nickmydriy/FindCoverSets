@@ -7,18 +7,26 @@ import ru.ifmo.mudry.coverproblem.geneticalgorithm.util.Vector;
 import java.util.ArrayList;
 
 /**
- * Простая функция смены популяции.
- * Принцип: 1. берем всех индивидов из популяции, для которых результат
-*                  {@link ru.ifmo.mudry.coverproblem.geneticalgorithm.util.FitnessFunction} больше чем для нового индивида.
-*           2. Если таких нет, то ничего не делаем, популяция остается неизменной.
- *           Если есть, то заменяем случайного индивида нашим новым.
+ * Created by Nick Mudry on 22.02.2017.
  */
-public class ReplaceOnesWhoIsWorse implements ReplacementFunction {
+public class AverageReplace implements ReplacementFunction {
     @Override
     public void replace(ArrayList<Vector> population, Vector newUnit) {
+        for (Vector unit : population) {
+            int distance = newUnit.getVector().length;
+            for (int j = 0; j < newUnit.getVector().length; j++) {
+                if (unit.getVector()[j] == newUnit.getVector()[j]) {
+                    distance--;
+                }
+            }
+            if (distance == 0) {
+                return;
+            }
+        }
         ArrayList<Integer> candidates = new ArrayList<>(population.size());
+        Double average = population.stream().mapToDouble(Vector::getFitness).average().getAsDouble();
         for (int i = 0; i < population.size(); i++) {
-            if (population.get(i).getFitness() >= newUnit.getFitness()) {
+            if (population.get(i).getFitness() > average) {
                 candidates.add(i);
             }
         }

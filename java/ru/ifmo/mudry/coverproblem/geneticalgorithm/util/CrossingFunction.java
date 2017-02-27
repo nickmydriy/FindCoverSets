@@ -12,5 +12,8 @@ public interface CrossingFunction {
      * @param matrix матрица множеств.
      * @return возвращает список состоящих из детей заданных в parent индивидов.
      */
-    ArrayList<Vector> cross(Parents parents, ArrayList<Vector> population, SetsMatrix matrix);
+    ArrayList<Vector> cross(Parents parents, ArrayList<Vector> population, SetsMatrix matrix,
+                            PopulationPattern populationPattern);
+
+    int getChildrenCount();
 }

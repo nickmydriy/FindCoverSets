@@ -1,0 +1,104 @@
+2
+Mask functions
+Test Accurate. Compare with Bruteforce Algorithm.
+    Size: 25
+        1 Test.
+            Value: 66,407. Min: 69,487. Max: 382,500. Average 151,186.
+        Accurate: 0.0
+        2 Test.
+            Value: 40,877. Min: 40,877. Max: 349,911. Average 116,684.
+        Accurate: 0.0
+        3 Test.
+            Value: 25,649. Min: 25,649. Max: 414,269. Average 105,267.
+        Accurate: 0.0
+        4 Test.
+            Value: 20,565. Min: 20,565. Max: 373,829. Average 113,080.
+        Accurate: 0.0
+        5 Test.
+            Value: 33,811. Min: 33,811. Max: 381,458. Average 140,071.
+        Accurate: 0.0
+        6 Test.
+            Value: 60,966. Min: 60,966. Max: 336,260. Average 104,116.
+        Accurate: 0.0
+        7 Test.
+            Value: 47,254. Min: 47,254. Max: 294,482. Average 135,824.
+        Accurate: 0.0
+        8 Test.
+            Value: 40,773. Min: 49,648. Max: 327,762. Average 136,914.
+        Accurate: 0.0
+        9 Test.
+            Value: 21,801. Min: 21,801. Max: 329,811. Average 153,074.
+        Accurate: 0.0
+        10 Test.
+            Value: 68,039. Min: 68,039. Max: 293,658. Average 138,648.
+        Accurate: 0.0
+Average percent deviation: 258.75955226517556
+Average accurate: 0.0
+Average time: 17
+
+Test on big Data. Deviation between max and min value.
+    Size: 300
+        1 Test.
+            Min: 2165,260. Max: 3282,713. Average 2720,481.
+        2 Test.
+            Min: 2279,555. Max: 3829,229. Average 2709,130.
+        3 Test.
+            Min: 2006,208. Max: 3475,580. Average 2699,396.
+        4 Test.
+            Min: 1956,761. Max: 3233,323. Average 2596,175.
+        5 Test.
+            Min: 2214,585. Max: 3386,634. Average 2684,092.
+        6 Test.
+            Min: 2135,209. Max: 3230,648. Average 2651,490.
+        7 Test.
+            Min: 2152,199. Max: 3345,670. Average 2690,475.
+        8 Test.
+            Min: 2064,054. Max: 3384,643. Average 2556,779.
+        9 Test.
+            Min: 2281,678. Max: 4008,850. Average 3124,337.
+        10 Test.
+            Min: 1919,303. Max: 3057,303. Average 2406,170.
+Average percent deviation: 61.672091906432925
+Average time: 5646
+
+Test OR Library.
+    1 Test.
+        Value: 429. Min: 5737,000. Max: 9718,000. Average 7511,280.
+        Accurate: 0.0
+        Average time: 9053.05
+    2 Test.
+        Value: 512. Min: 5565,000. Max: 12149,000. Average 7624,810.
+        Accurate: 0.0
+        Average time: 9038.93
+    3 Test.
+        Value: 516. Min: 5695,000. Max: 11968,000. Average 7510,930.
+        Accurate: 0.0
+        Average time: 9355.0
+    4 Test.
+        Value: 494. Min: 5646,000. Max: 10944,000. Average 7658,330.
+        Accurate: 0.0
+        Average time: 8923.89
+    5 Test.
+        Value: 512. Min: 5655,000. Max: 10651,000. Average 7338,120.
+        Accurate: 0.0
+        Average time: 9468.6
+    6 Test.
+        Value: 560. Min: 5778,000. Max: 10738,000. Average 7823,070.
+        Accurate: 0.0
+        Average time: 9168.07
+    7 Test.
+        Value: 430. Min: 5621,000. Max: 10114,000. Average 7474,250.
+        Accurate: 0.0
+        Average time: 8718.28
+    8 Test.
+        Value: 492. Min: 5678,000. Max: 11265,000. Average 7953,180.
+        Accurate: 0.0
+        Average time: 9158.12
+    9 Test.
+        Value: 641. Min: 5560,000. Max: 11041,000. Average 8057,250.
+        Accurate: 0.0
+        Average time: 8806.28
+Average percent deviation: 1420.873327089633
+Average accurate: 0.0
+Average time: 9076
+

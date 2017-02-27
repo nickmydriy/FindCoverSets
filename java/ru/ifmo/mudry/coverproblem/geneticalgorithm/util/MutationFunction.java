@@ -9,5 +9,5 @@ public interface MutationFunction {
      * @param matrix матрица множеств.
      * @return индивид, получившийся из unit, с некоторым измененным набором генов. (Может и не быть изменений).
      */
-    Vector mutate(Vector unit, SetsMatrix matrix);
+    Vector mutate(Vector unit, SetsMatrix matrix, PopulationPattern populationPattern);
 }
